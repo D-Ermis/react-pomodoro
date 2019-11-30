@@ -1,4 +1,6 @@
 import React from "react";
+import ReactModal from "react-modal";
+ReactModal.setAppElement("#app");
 
 class Timer extends React.Component {
     constructor(props) {
@@ -7,8 +9,9 @@ class Timer extends React.Component {
         this.state = {
             isOn: false,
             seconds: 0,
-            minutes: 25,
+            minutes: 1,
             sessionLength: 25,
+            showModal: true,
         };
 
         this.handleStart = this.handleStart.bind(this);
@@ -16,8 +19,34 @@ class Timer extends React.Component {
         this.handleReset = this.handleReset.bind(this);
         this.handleIncreaseTime = this.handleIncreaseTime.bind(this);
         this.handleDecreaseTime = this.handleDecreaseTime.bind(this);
+
+        // Modal bindings
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleCloseAndRestart = this.handleCloseAndRestart.bind(this);
     }
 
+    // MODAL SECTION START
+    handleOpenModal() {
+        this.setState({
+            showModal: true,
+        });
+    }
+
+    handleCloseModal() {
+        this.setState({
+            showModal: false,
+        });
+        this.handleReset();
+    }
+
+    handleCloseAndRestart() {
+        this.handleCloseModal();
+        this.handleStart();
+    }
+    // MODAL SECTION END
+
+    // TIMER SECTION START
     handleStart() {
         this.isCountingDown(true);
         this.interval = setInterval(() => {
@@ -32,6 +61,7 @@ class Timer extends React.Component {
                 if (minutes === 0) {
                     clearInterval(this.interval);
                     this.isCountingDown(false);
+                    this.handleOpenModal();
                 } else {
                     this.setState(state => ({
                         minutes: state.minutes - 1,
@@ -39,7 +69,7 @@ class Timer extends React.Component {
                     }));
                 }
             }
-        }, 100);
+        }, 10);
     }
 
     handleStop() {
@@ -49,9 +79,9 @@ class Timer extends React.Component {
 
     handleReset() {
         this.handleStop();
-        this.setState(prevState => ({
+        this.setState(state => ({
             seconds: 0,
-            minutes: prevState.sessionLength,
+            minutes: state.sessionLength,
         }));
     }
 
@@ -89,26 +119,73 @@ class Timer extends React.Component {
         return (
             <div>
                 {this.state.isOn ? (
-                    <button onClick={this.handleStop} type={"button"}>
+                    <button
+                        className={
+                            "btn-floating btn-large waves-effect waves-light red"
+                        }
+                        onClick={this.handleStop}
+                        type={"button"}>
                         {"Stop"}
                     </button>
                 ) : (
-                    <button onClick={this.handleStart} type={"button"}>
+                    <button
+                        className={
+                            "btn-floating btn-large waves-effect waves-light green"
+                        }
+                        onClick={this.handleStart}
+                        type={"button"}>
                         {"Start"}
                     </button>
                 )}
-                <button onClick={this.handleReset} type={"button"}>
+                <button
+                    className={
+                        "btn-floating btn-large waves-effect waves-light blue"
+                    }
+                    onClick={this.handleReset}
+                    type={"button"}>
                     {"Reset"}
                 </button>
-                <button onClick={this.handleIncreaseTime} type={"button"}>
-                    {"UP"}
+                <button
+                    className={"waves-effect waves-light btn-small"}
+                    disabled={this.state.isOn ? "disabled" : ""}
+                    onClick={this.handleIncreaseTime}
+                    type={"button"}>
+                    <i className={"material-icons"}>{"arrow_upward"}</i>
                 </button>
-                <button onClick={this.handleDecreaseTime} type={"button"}>
-                    {"DOWN"}
+                <button
+                    className={"waves-effect waves-light btn-small"}
+                    disabled={this.state.isOn ? "disabled" : ""}
+                    onClick={this.handleDecreaseTime}
+                    type={"button"}>
+                    <i className={"material-icons"}>{"arrow_downward"}</i>
                 </button>
 
                 {minutes === 0 && seconds === 0 ? (
-                    <h1>{this.state.isOn ? "ON" : "OFF"}</h1>
+                    <div className={"Modal"}>
+                        <ReactModal
+                            isOpen={this.state.showModal}
+                            contentLabel={"Minimal Modal Example"}>
+                            <p>
+                                {
+                                    "Would you like to continue your working session?"
+                                }
+                            </p>
+                            <button
+                                type={"button"}
+                                className={
+                                    "waves-effect waves-light btn-small red"
+                                }
+                                onClick={this.handleCloseModal}>
+                                {"No, I need a break"}
+                            </button>
+                            <button
+                                type={"button"}
+                                className={"waves-effect waves-light btn-small"}
+                                onClick={this.handleCloseAndRestart}>
+                                {"Yeah, keep going"}
+                            </button>
+                        </ReactModal>
+                    </div>
                 ) : (
                     <h1>
                         {minutes}
