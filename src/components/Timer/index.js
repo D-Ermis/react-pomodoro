@@ -7,8 +7,8 @@ class Timer extends React.Component {
         this.state = {
             isOn: false,
             seconds: 0,
-            minutes: 3,
-            sessionLength: 3,
+            minutes: 25,
+            sessionLength: 25,
         };
 
         this.handleStart = this.handleStart.bind(this);
@@ -57,7 +57,8 @@ class Timer extends React.Component {
 
     handleIncreaseTime() {
         this.setState(state => ({
-            minutes: state.minutes + 1,
+            sessionLength: state.sessionLength + 1,
+            minutes: state.sessionLength + 1,
             seconds: 0,
         }));
     }
@@ -65,7 +66,8 @@ class Timer extends React.Component {
     handleDecreaseTime() {
         if (this.state.minutes > 1) {
             this.setState(state => ({
-                minutes: state.minutes - 1,
+                sessionLength: state.sessionLength - 1,
+                minutes: state.sessionLength - 1,
                 seconds: 0,
             }));
         }
