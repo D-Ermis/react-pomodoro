@@ -8,13 +8,15 @@ class Timer extends React.Component {
             isOn: false,
             seconds: 0,
             minutes: 3,
+            sessionLength: 3,
         };
 
-        this.handleStartTimer = this.handleStartTimer.bind(this);
-        this.handleStopTimer = this.handleStopTimer.bind(this);
+        this.handleStart = this.handleStart.bind(this);
+        this.handleStop = this.handleStop.bind(this);
+        this.handleReset = this.handleReset.bind(this);
     }
 
-    handleStartTimer() {
+    handleStart() {
         this.isCountingDown(true);
         this.interval = setInterval(() => {
             const {minutes, seconds} = this.state;
@@ -38,9 +40,17 @@ class Timer extends React.Component {
         }, 10);
     }
 
-    handleStopTimer() {
+    handleStop() {
         clearInterval(this.interval);
         this.isCountingDown(false);
+    }
+
+    handleReset() {
+        this.handleStop();
+        this.setState(prevState => ({
+            seconds: 0,
+            minutes: prevState.sessionLength,
+        }));
     }
 
     // Set isOn state to TRUE or FALSE
@@ -59,14 +69,17 @@ class Timer extends React.Component {
         return (
             <div>
                 {this.state.isOn ? (
-                    <button onClick={this.handleStopTimer} type={"button"}>
+                    <button onClick={this.handleStop} type={"button"}>
                         {"Stop"}
                     </button>
                 ) : (
-                    <button onClick={this.handleStartTimer} type={"button"}>
+                    <button onClick={this.handleStart} type={"button"}>
                         {"Start"}
                     </button>
                 )}
+                <button onClick={this.handleReset} type={"button"}>
+                    {"Reset"}
+                </button>
 
                 {minutes === 0 && seconds === 0 ? (
                     <h1>{this.state.isOn ? "ON" : "OFF"}</h1>
