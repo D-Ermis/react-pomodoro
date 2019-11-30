@@ -1,6 +1,5 @@
 import React from "react";
-import ReactModal from "react-modal";
-ReactModal.setAppElement("#app");
+import Modal from "../Modal";
 
 class Timer extends React.Component {
     constructor(props) {
@@ -9,44 +8,16 @@ class Timer extends React.Component {
         this.state = {
             isOn: false,
             seconds: 0,
-            minutes: 1,
-            sessionLength: 25,
-            showModal: true,
+            minutes: 5,
+            sessionLength: 5,
         };
-
         this.handleStart = this.handleStart.bind(this);
         this.handleStop = this.handleStop.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.handleIncreaseTime = this.handleIncreaseTime.bind(this);
         this.handleDecreaseTime = this.handleDecreaseTime.bind(this);
-
-        // Modal bindings
-        this.handleOpenModal = this.handleOpenModal.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
-        this.handleCloseAndRestart = this.handleCloseAndRestart.bind(this);
     }
 
-    // MODAL SECTION START
-    handleOpenModal() {
-        this.setState({
-            showModal: true,
-        });
-    }
-
-    handleCloseModal() {
-        this.setState({
-            showModal: false,
-        });
-        this.handleReset();
-    }
-
-    handleCloseAndRestart() {
-        this.handleCloseModal();
-        this.handleStart();
-    }
-    // MODAL SECTION END
-
-    // TIMER SECTION START
     handleStart() {
         this.isCountingDown(true);
         this.interval = setInterval(() => {
@@ -161,31 +132,10 @@ class Timer extends React.Component {
                 </button>
 
                 {minutes === 0 && seconds === 0 ? (
-                    <div className={"Modal"}>
-                        <ReactModal
-                            isOpen={this.state.showModal}
-                            contentLabel={"Minimal Modal Example"}>
-                            <p>
-                                {
-                                    "Would you like to continue your working session?"
-                                }
-                            </p>
-                            <button
-                                type={"button"}
-                                className={
-                                    "waves-effect waves-light btn-small red"
-                                }
-                                onClick={this.handleCloseModal}>
-                                {"No, I need a break"}
-                            </button>
-                            <button
-                                type={"button"}
-                                className={"waves-effect waves-light btn-small"}
-                                onClick={this.handleCloseAndRestart}>
-                                {"Yeah, keep going"}
-                            </button>
-                        </ReactModal>
-                    </div>
+                    <Modal
+                        onTimerStart={this.handleStart}
+                        onTimerReset={this.handleReset}
+                    />
                 ) : (
                     <h1>
                         {minutes}
