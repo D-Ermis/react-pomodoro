@@ -1,48 +1,75 @@
-/* eslint-disable no-shadow */
 import React from "react";
 
-export default class Timer extends React.Component {
+class Timer extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            isOn: false,
             seconds: 0,
             minutes: 3,
         };
+
+        this.handleStartTimer = this.handleStartTimer.bind(this);
+        this.handleStopTimer = this.handleStopTimer.bind(this);
     }
 
-    componentDidMount() {
-        this.myInterval = setInterval(() => {
-            const {seconds, minutes} = this.state;
+    handleStartTimer() {
+        this.isCountingDown(true);
+        this.interval = setInterval(() => {
+            const {minutes, seconds} = this.state;
 
             if (seconds > 0) {
-                this.setState(({seconds}) => ({
-                    seconds: seconds - 1,
+                this.setState(state => ({
+                    seconds: state.seconds - 1,
                 }));
             }
             if (seconds === 0) {
                 if (minutes === 0) {
-                    clearInterval(this.myInterval);
+                    clearInterval(this.interval);
+                    this.isCountingDown(false);
                 } else {
-                    this.setState(({minutes}) => ({
-                        minutes: minutes - 1,
+                    this.setState(state => ({
+                        minutes: state.minutes - 1,
                         seconds: 59,
                     }));
                 }
             }
-        }, 1000);
+        }, 10);
+    }
+
+    handleStopTimer() {
+        clearInterval(this.interval);
+        this.isCountingDown(false);
+    }
+
+    // Set isOn state to TRUE or FALSE
+    isCountingDown(isOn) {
+        this.setState({
+            isOn,
+        });
     }
 
     componentWillUnmount() {
-        clearInterval(this.myInterval);
+        clearInterval(this.interval);
     }
 
     render() {
         const {minutes, seconds} = this.state;
         return (
             <div>
+                {this.state.isOn ? (
+                    <button onClick={this.handleStopTimer} type={"button"}>
+                        {"Stop"}
+                    </button>
+                ) : (
+                    <button onClick={this.handleStartTimer} type={"button"}>
+                        {"Start"}
+                    </button>
+                )}
+
                 {minutes === 0 && seconds === 0 ? (
-                    <h1>{"Busted!"}</h1>
+                    <h1>{this.state.isOn ? "ON" : "OFF"}</h1>
                 ) : (
                     <h1>
                         {minutes}
@@ -54,3 +81,5 @@ export default class Timer extends React.Component {
         );
     }
 }
+
+export default Timer;
