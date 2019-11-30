@@ -86,71 +86,89 @@ class Timer extends React.Component {
     render() {
         const {minutes, seconds} = this.state;
         return (
-            <div className={"row timer"}>
-                {minutes === 0 && seconds === 0 ? (
-                    <Modal
-                        onTimerStart={this.handleStart}
-                        onTimerReset={this.handleReset}
-                    />
-                ) : (
+            <div>
+                <div className={"row timer"}>
                     <div className={"col m4 counter"}>
+                        {/* Display Time */}
                         <span>
                             {minutes}
                             {":"}
                             {seconds < 10 ? `0${seconds}` : seconds}
                         </span>
                     </div>
-                )}
-                <div className={"col s2"}>
-                    {this.state.isOn ? (
-                        <button
-                            className={"waves-effect waves-light btn-small red"}
-                            onClick={this.handleStop}
-                            type={"button"}>
-                            {"Stop"}
-                            <i className={"material-icons left"}>{"pause"}</i>
-                        </button>
-                    ) : (
+                    <div className={"col s2"}>
+                        {this.state.isOn ? (
+                            // Pause Button
+                            <button
+                                className={
+                                    "waves-effect waves-light btn-small red"
+                                }
+                                onClick={this.handleStop}
+                                type={"button"}>
+                                {"Stop"}
+                                <i className={"material-icons left"}>
+                                    {"pause"}
+                                </i>
+                            </button>
+                        ) : (
+                            // Play Button
+                            <button
+                                className={
+                                    "waves-effect waves-light btn-small green"
+                                }
+                                onClick={this.handleStart}
+                                type={"button"}>
+                                {"Start"}
+                                <i className={"material-icons left"}>
+                                    {"play_arrow"}
+                                </i>
+                            </button>
+                        )}
+
+                        {/* Stop Button */}
                         <button
                             className={
-                                "waves-effect waves-light btn-small green"
+                                "waves-effect waves-light btn-small blue"
                             }
-                            onClick={this.handleStart}
+                            onClick={this.handleReset}
                             type={"button"}>
-                            {"Start"}
+                            {"Reset"}
+                            <i className={"material-icons left"}>{"stop"}</i>
+                        </button>
+
+                        {/* Up Button */}
+                        <button
+                            className={"waves-effect waves-light btn-small"}
+                            disabled={this.state.isOn ? "disabled" : ""}
+                            onClick={this.handleIncreaseTime}
+                            type={"button"}>
+                            {"Up"}
                             <i className={"material-icons left"}>
-                                {"play_arrow"}
+                                {"arrow_upward"}
                             </i>
                         </button>
-                    )}
-                    <button
-                        className={"waves-effect waves-light btn-small blue"}
-                        onClick={this.handleReset}
-                        type={"button"}>
-                        {"Reset"}
-                        <i className={"material-icons left"}>{"stop"}</i>
-                    </button>
-                    <button
-                        className={"waves-effect waves-light btn-small"}
-                        disabled={this.state.isOn ? "disabled" : ""}
-                        onClick={this.handleIncreaseTime}
-                        type={"button"}>
-                        {"Up"}
-                        <i className={"material-icons left"}>
-                            {"arrow_upward"}
-                        </i>
-                    </button>
-                    <button
-                        className={"waves-effect waves-light btn-small"}
-                        disabled={this.state.isOn ? "disabled" : ""}
-                        onClick={this.handleDecreaseTime}
-                        type={"button"}>
-                        {"Down"}
-                        <i className={"material-icons left"}>
-                            {"arrow_downward"}
-                        </i>
-                    </button>
+
+                        {/* Down Button */}
+                        <button
+                            className={"waves-effect waves-light btn-small"}
+                            disabled={this.state.isOn ? "disabled" : ""}
+                            onClick={this.handleDecreaseTime}
+                            type={"button"}>
+                            {"Down"}
+                            <i className={"material-icons left"}>
+                                {"arrow_downward"}
+                            </i>
+                        </button>
+                    </div>
                 </div>
+
+                {/* Display Modal */}
+                {minutes === 0 && seconds === 0 && (
+                    <Modal
+                        onTimerStart={this.handleStart}
+                        onTimerReset={this.handleReset}
+                    />
+                )}
             </div>
         );
     }

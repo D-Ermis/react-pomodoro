@@ -37,10 +37,8 @@ class Modal extends React.Component {
             <div className={"Modal"}>
                 <ReactModal
                     isOpen={this.state.showModal}
-                    contentLabel={"Minimal Modal Example"}>
-                    <h3>
-                        {"Would you like to continue your working session?"}
-                    </h3>
+                    contentLabel={"Pomodoro Modal"}>
+                    <h3>{"Continue working?"}</h3>
                     <button
                         type={"button"}
                         className={"waves-effect waves-light btn-small red"}
