@@ -14,6 +14,8 @@ class Timer extends React.Component {
         this.handleStart = this.handleStart.bind(this);
         this.handleStop = this.handleStop.bind(this);
         this.handleReset = this.handleReset.bind(this);
+        this.handleIncreaseTime = this.handleIncreaseTime.bind(this);
+        this.handleDecreaseTime = this.handleDecreaseTime.bind(this);
     }
 
     handleStart() {
@@ -37,7 +39,7 @@ class Timer extends React.Component {
                     }));
                 }
             }
-        }, 10);
+        }, 100);
     }
 
     handleStop() {
@@ -51,6 +53,22 @@ class Timer extends React.Component {
             seconds: 0,
             minutes: prevState.sessionLength,
         }));
+    }
+
+    handleIncreaseTime() {
+        this.setState(state => ({
+            minutes: state.minutes + 1,
+            seconds: 0,
+        }));
+    }
+
+    handleDecreaseTime() {
+        if (this.state.minutes > 1) {
+            this.setState(state => ({
+                minutes: state.minutes - 1,
+                seconds: 0,
+            }));
+        }
     }
 
     // Set isOn state to TRUE or FALSE
@@ -79,6 +97,12 @@ class Timer extends React.Component {
                 )}
                 <button onClick={this.handleReset} type={"button"}>
                     {"Reset"}
+                </button>
+                <button onClick={this.handleIncreaseTime} type={"button"}>
+                    {"UP"}
+                </button>
+                <button onClick={this.handleDecreaseTime} type={"button"}>
+                    {"DOWN"}
                 </button>
 
                 {minutes === 0 && seconds === 0 ? (
