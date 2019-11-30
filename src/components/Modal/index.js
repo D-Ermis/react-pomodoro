@@ -45,13 +45,13 @@ class Modal extends React.Component {
                         type={"button"}
                         className={"waves-effect waves-light btn-small red"}
                         onClick={this.handleCloseModal}>
-                        {"No, I need a break"}
+                        {"No"}
                     </button>
                     <button
                         type={"button"}
                         className={"waves-effect waves-light btn-small"}
                         onClick={this.handleCloseAndRestart}>
-                        {"Yeah, keep going"}
+                        {"Yes"}
                     </button>
                 </ReactModal>
             </div>

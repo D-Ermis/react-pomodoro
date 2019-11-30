@@ -7,14 +7,9 @@ function App() {
             <div className={"row"}>
                 <div className={"col s12"}>
                     <h1>{"Pomodoro"}</h1>
-                    <h2>{"by Doggy"}</h2>
                 </div>
             </div>
-            <div className={"row"}>
-                <div className={"col s12"}>
-                    <Timer />
-                </div>
-            </div>
+            <Timer />
         </div>
     );
 }

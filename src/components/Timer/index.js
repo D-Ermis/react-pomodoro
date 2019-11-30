@@ -30,9 +30,7 @@ class Timer extends React.Component {
             }
             if (seconds === 0) {
                 if (minutes === 0) {
-                    clearInterval(this.interval);
-                    this.isCountingDown(false);
-                    this.handleOpenModal();
+                    this.handleStop();
                 } else {
                     this.setState(state => ({
                         minutes: state.minutes - 1,
@@ -88,61 +86,71 @@ class Timer extends React.Component {
     render() {
         const {minutes, seconds} = this.state;
         return (
-            <div>
-                {this.state.isOn ? (
-                    <button
-                        className={
-                            "btn-floating btn-large waves-effect waves-light red"
-                        }
-                        onClick={this.handleStop}
-                        type={"button"}>
-                        {"Stop"}
-                    </button>
-                ) : (
-                    <button
-                        className={
-                            "btn-floating btn-large waves-effect waves-light green"
-                        }
-                        onClick={this.handleStart}
-                        type={"button"}>
-                        {"Start"}
-                    </button>
-                )}
-                <button
-                    className={
-                        "btn-floating btn-large waves-effect waves-light blue"
-                    }
-                    onClick={this.handleReset}
-                    type={"button"}>
-                    {"Reset"}
-                </button>
-                <button
-                    className={"waves-effect waves-light btn-small"}
-                    disabled={this.state.isOn ? "disabled" : ""}
-                    onClick={this.handleIncreaseTime}
-                    type={"button"}>
-                    <i className={"material-icons"}>{"arrow_upward"}</i>
-                </button>
-                <button
-                    className={"waves-effect waves-light btn-small"}
-                    disabled={this.state.isOn ? "disabled" : ""}
-                    onClick={this.handleDecreaseTime}
-                    type={"button"}>
-                    <i className={"material-icons"}>{"arrow_downward"}</i>
-                </button>
-
+            <div className={"row timer"}>
                 {minutes === 0 && seconds === 0 ? (
                     <Modal
                         onTimerStart={this.handleStart}
                         onTimerReset={this.handleReset}
                     />
                 ) : (
-                    <h1>
-                        {minutes}
-                        {":"}
-                        {seconds < 10 ? `0${seconds}` : seconds}
-                    </h1>
+                    <div className={"col m4 counter"}>
+                        <span>
+                            {minutes}
+                            {":"}
+                            {seconds < 10 ? `0${seconds}` : seconds}
+                        </span>
+                    </div>
                 )}
+                <div className={"col s2"}>
+                    {this.state.isOn ? (
+                        <button
+                            className={"waves-effect waves-light btn-small red"}
+                            onClick={this.handleStop}
+                            type={"button"}>
+                            {"Stop"}
+                            <i className={"material-icons left"}>{"pause"}</i>
+                        </button>
+                    ) : (
+                        <button
+                            className={
+                                "waves-effect waves-light btn-small green"
+                            }
+                            onClick={this.handleStart}
+                            type={"button"}>
+                            {"Start"}
+                            <i className={"material-icons left"}>
+                                {"play_arrow"}
+                            </i>
+                        </button>
+                    )}
+                    <button
+                        className={"waves-effect waves-light btn-small blue"}
+                        onClick={this.handleReset}
+                        type={"button"}>
+                        {"Reset"}
+                        <i className={"material-icons left"}>{"stop"}</i>
+                    </button>
+                    <button
+                        className={"waves-effect waves-light btn-small"}
+                        disabled={this.state.isOn ? "disabled" : ""}
+                        onClick={this.handleIncreaseTime}
+                        type={"button"}>
+                        {"Up"}
+                        <i className={"material-icons left"}>
+                            {"arrow_upward"}
+                        </i>
+                    </button>
+                    <button
+                        className={"waves-effect waves-light btn-small"}
+                        disabled={this.state.isOn ? "disabled" : ""}
+                        onClick={this.handleDecreaseTime}
+                        type={"button"}>
+                        {"Down"}
+                        <i className={"material-icons left"}>
+                            {"arrow_downward"}
+                        </i>
+                    </button>
+                </div>
             </div>
         );
     }
