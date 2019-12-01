@@ -10,6 +10,7 @@ const customStyles = {
         right: "auto",
         padding: "3rem",
         transform: "translate(-50%, -50%)",
+        backgroundColor: "#eee",
     },
 };
 ReactModal.setAppElement("#app");
