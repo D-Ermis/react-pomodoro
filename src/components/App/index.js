@@ -12,7 +12,7 @@ function App() {
             <Timer />
             <div className={"row"}>
                 <div className={"col s12"}>
-                    <span>{"Speed x100 for testing purposes"}</span>
+                    <span>{"(Timer speed x100 for testing purposes)"}</span>
                 </div>
             </div>
         </div>

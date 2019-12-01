@@ -1,5 +1,17 @@
 import React from "react";
 import ReactModal from "react-modal";
+
+const customStyles = {
+    content: {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        bottom: "auto",
+        right: "auto",
+        padding: "3rem",
+        transform: "translate(-50%, -50%)",
+    },
+};
 ReactModal.setAppElement("#app");
 
 class Modal extends React.Component {
@@ -34,10 +46,11 @@ class Modal extends React.Component {
 
     render() {
         return (
-            <div className={"Modal"}>
+            <div className={"modal"}>
                 <ReactModal
                     isOpen={this.state.showModal}
-                    contentLabel={"Pomodoro Modal"}>
+                    contentLabel={"Pomodoro Modal"}
+                    style={customStyles}>
                     <h3>{"Continue working?"}</h3>
                     <button
                         type={"button"}
