@@ -87,16 +87,30 @@ class Timer extends React.Component {
         const {minutes, seconds} = this.state;
         return (
             <div>
-                <div className={"row timer"}>
-                    <div className={"col m4 counter"}>
+                <div className={"row"}>
+                    <div className={"col m4 offset-m3"}>
                         {/* Display Time */}
-                        <span>
+                        <span className={"counter"}>
                             {minutes}
                             {":"}
                             {seconds < 10 ? `0${seconds}` : seconds}
                         </span>
                     </div>
                     <div className={"col s2"}>
+                        {/* Up Button */}
+                        <button
+                            className={
+                                "waves-effect waves-light btn-small orange accent-4"
+                            }
+                            disabled={this.state.isOn ? "disabled" : ""}
+                            onClick={this.handleIncreaseTime}
+                            type={"button"}>
+                            {"Up"}
+                            <i className={"material-icons left"}>
+                                {"arrow_upward"}
+                            </i>
+                        </button>
+
                         {this.state.isOn ? (
                             // Pause Button
                             <button
@@ -136,21 +150,11 @@ class Timer extends React.Component {
                             <i className={"material-icons left"}>{"stop"}</i>
                         </button>
 
-                        {/* Up Button */}
-                        <button
-                            className={"waves-effect waves-light btn-small"}
-                            disabled={this.state.isOn ? "disabled" : ""}
-                            onClick={this.handleIncreaseTime}
-                            type={"button"}>
-                            {"Up"}
-                            <i className={"material-icons left"}>
-                                {"arrow_upward"}
-                            </i>
-                        </button>
-
                         {/* Down Button */}
                         <button
-                            className={"waves-effect waves-light btn-small"}
+                            className={
+                                "waves-effect waves-light btn-small orange accent-4"
+                            }
                             disabled={this.state.isOn ? "disabled" : ""}
                             onClick={this.handleDecreaseTime}
                             type={"button"}>

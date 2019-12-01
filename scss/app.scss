@@ -4,8 +4,6 @@
 
 .col {
     text-align: center;
-    justify-content: center;
-    align-items: center;
 }
 
 button {
@@ -13,12 +11,5 @@ button {
 }
 
 .counter {
-    border: 2px solid black;
-    span {
-        font-size: 6rem;
-    }
-}
-
-.row {
-    justify-content: space-between;
+    font-size: 6rem;
 }
