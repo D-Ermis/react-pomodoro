@@ -3,8 +3,6 @@
 -   Version : 0.0.1
 -   Author : Dogukan Ermis
 
-## My first React app
-
 ### Description
 
 A simple React Pomodoro app to boost your productivity
@@ -13,12 +11,12 @@ A simple React Pomodoro app to boost your productivity
 
 [Pomodoro Web APP](https://frosty-darwin-726734.netlify.com/)
 
-### BeCode.org challenge
+### Built With
 
--   Repository : react-pomodoro
--   Deadline : 02/12/2019 5:00 pm
--   Team : solo
+-   [Parcel](https://en.parceljs.org/) - Web application bundler
+-   [React](https://reactjs.org/) - JavaScript library for building UI
+-   [Netlify](https://www.netlify.com/) - Project deployment
 
-### Tools and resources
+### Resources
 
 -   [ReactJS documentation](https://reactjs.org/docs/getting-started.html)
